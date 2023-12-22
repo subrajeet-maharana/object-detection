@@ -13,5 +13,19 @@ export async function POST(req: Request, res: Response) {
     const detector = await pipeline('object-detection', 'Xenova/detr-resnet-50');
     const output = await detector(url);
     console.log(output);
-    return new Response("dummy resposne", { status: 200 });
+    
+    const countObj:{[key:string]:number} = {};
+    output.forEach(({score, label}: any) => {
+        if(score>0.5){
+            if(countObj[label]){
+                countObj[label] += 1;
+            }else{
+                countObj[label] = 1;
+            }
+        }
+    });
+    return new Response(JSON.stringify({
+        url:url,
+        label: JSON.stringify(countObj),
+    }), { status: 200 });
 }

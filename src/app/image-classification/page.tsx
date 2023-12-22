@@ -41,6 +41,8 @@ const ImageClassificationPage: React.FC<MyComponentProps> = () => {
         setLoading(true);
         const response = await axios.post('/api/image-classification', formData);
         setLoading(false);
+        setUrl(response.data.url);
+        setLabel(response.data.label);
     }
 };
 
