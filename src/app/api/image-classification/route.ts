@@ -16,7 +16,7 @@ export async function POST(req: Request, res: Response) {
     
     const countObj:{[key:string]:number} = {};
     output.forEach(({score, label}: any) => {
-        if(score>0.5){
+        if(score>0.75){
             if(countObj[label]){
                 countObj[label] += 1;
             }else{
